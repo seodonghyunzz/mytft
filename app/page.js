@@ -1,20 +1,12 @@
-import Header from "./header/page";
-import Banner from "./component/banner";
 import Ranking from "./component/ranking";
+import Favorites from "./component/favorites";
 export default async function Home() {
 
   return (
     <div className="page">
-      <section className="header_section">
-        <Header/>
-        <Banner/>
-      </section>
       <section className="main_section">
+        <Favorites/>
         <Ranking/>
-        <p>main contents</p>
-      </section>
-      <section className="footer_section">
-        <p>footer</p>
       </section>
     </div>
   )

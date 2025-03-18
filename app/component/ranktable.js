@@ -1,6 +1,10 @@
 'use client'
 import React from 'react'
+import { useRouter } from 'next/navigation';
 export default function ranktable( { Challenger_Data, Grandmaster_Data, Master_Data } ) {
+    
+    const router = useRouter();
+    
     Challenger_Data.forEach(element => {
         element.rank = "Challenger";
     });
@@ -20,9 +24,12 @@ export default function ranktable( { Challenger_Data, Grandmaster_Data, Master_D
     const calculateTotalGames = (wins, losses) => {
         return wins + losses;
     }
+    const routeToSearch = (searchText) => {      
+        router.push(`/search?query=${searchText}`);
+    }
     return (
         <div className="ranking">
-            <p className='ranking_title'>전체 순위</p>
+            <p className='contents_title'>순위표</p>
             <table className="ranking_table">
                 <thead>
                     <tr>
@@ -31,9 +38,7 @@ export default function ranktable( { Challenger_Data, Grandmaster_Data, Master_D
                         <th>티어</th>
                         <th>LP</th>
                         <th>전체 게임 수</th>
-                        <th>승리</th>
                         <th>Top 4</th>
-                        <th>승률(%)</th>
                         <th>Top 4(%)</th>
                     </tr>
                 </thead>
@@ -41,13 +46,11 @@ export default function ranktable( { Challenger_Data, Grandmaster_Data, Master_D
                    <tbody key={index}>
                         <tr>
                             <td>{index + 1}</td>
-                            <td>{item.gameName}#{item.tagLine}</td>
+                            <td className="ranking_name" onClick={() => routeToSearch(item.gameName+"#"+item.tagLine)}>{item.gameName}#{item.tagLine}</td>
                             <td>{item.rank}</td>
                             <td>{item.leaguePoints}</td>
                             <td>{calculateTotalGames(item.wins, item.losses)}</td>
-                            <td>승리수</td>
                             <td>{item.wins}</td>
-                            <td>승률</td>
                             <td>{calculateWinRate(item.wins, item.losses)}%</td>
                         </tr>
                     </tbody> 

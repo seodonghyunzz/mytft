@@ -1,12 +1,19 @@
+'use client'
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import SearchApi from "../component/searchApi";
+export default function Search() {
+  const searchParams = useSearchParams();
+  const gameName = searchParams.get("query");
+  const [gameTag, setGameTag] = useState("");
 
-export default async function Search({searchParams}) {
-   const query = searchParams?.query || ""
-   console.log(query)
-    
-    return (
-        <div className="search">
-            
-        </div>
-    )
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setGameTag(window.location.hash.substring(1));
+    }
+  }, []);
+
+  return (
+    <div className="search_page"><SearchApi gameName={gameName} gameTag={gameTag}/></div>
+  )
 }
-
